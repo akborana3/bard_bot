@@ -10,14 +10,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Python dependencies
-        uses: actions/setup-python@v3
+      - name: Install Java dependencies
+        uses: actions/setup-java@v3
         with:
-          python-version: 3.13
+          java-version: 17
 
       - name: Install the ChatGPT API client
-        run: pip install chatgpt
+        run: mvn install:install-file -Dfile=chatgpt-java-<version>.jar -DgroupId=com.github.gr1228 -DartifactId=chatgpt-java -Dversion=<version>
 
       - name: Start the Telegram bot
-        run: python bot.py
-        
+        run: java -jar bot.jar
