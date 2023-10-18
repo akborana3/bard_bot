@@ -15,8 +15,8 @@ jobs:
         with:
           python-version: 3.10
 
-      - name: Install the Bard API client
-        run: pip install google-bard
+      - name: Install the ChatGPT API client
+        run: pip install chatgpt
 
       - name: Start the Telegram bot
         run: python bot.py
