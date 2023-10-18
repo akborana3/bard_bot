@@ -1,0 +1,23 @@
+name: Telegram Bot
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Python dependencies
+        uses: actions/setup-python@v3
+        with:
+          python-version: 3.10
+
+      - name: Install the Bard API client
+        run: pip install google-bard
+
+      - name: Start the Telegram bot
+        run: python bot.py
+        
