@@ -17,4 +17,4 @@ jobs:
           cache: "pip"
 
       - name: Run your Python script
-        run: python your_python_script.py
+        run: python bot.py
