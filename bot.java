@@ -1,63 +1,23 @@
-import org.telegram.telegrambots.ApiContextInitializer;
-import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.TelegramBotsApi;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import telebot
+import chatgpt
 
-import com.github.gr1228.chatgpt.ChatGPTClient;
+# Create a Telegram bot client.
+bot = telebot.TeleBot('YOUR_TELEGRAM_BOT_TOKEN')
 
-public class Bot extends TelegramLongPollingBot {
+# Create a ChatGPT API client.
+chatgpt = chatgpt.ChatGPTClient('YOUR_CHATGPT_API_KEY')
 
-    private ChatGPTClient chatGPTClient;
+# Define a function to handle incoming messages.
+def handle_message(message):
+  # Get the user's message.
+  user_message = message.text
 
-    public Bot() {
-        this.chatGPTClient = new ChatGPTClient("<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>");
-    }
+  # Generate a response using the ChatGPT API.
+  chatgpt_response = chatgpt.generate_text(user_message)
 
-    @Override
-    public String getBotUsername() {
-        return "<@Ravan_telegraph_bot>";
-    }
+  # Send the response to the user.
+  bot.send_message(message.chat.id, chatgpt_response)
 
-    @Override
-    public String getBotToken() {
-        return "<1612851329:AAHrHzGcJ_X0zeVilazgMrlDoECI_qyBJJI>";
-    }
-
-    @Override
-    public void onUpdateReceived(Update update) {
-        if (update.hasMessage()) {
-            Message message = update.getMessage();
-
-            String userMessage = message.getText();
-            String chatGPTResponse = chatGPTClient.generateText(userMessage);
-
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setChatId(message.getChatId());
-            sendMessage.setText(chatGPTResponse);
-
-            try {
-                execute(sendMessage);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        ApiContextInitializer.init();
-
-        TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-
-        Bot bot = new Bot();
-
-        try {
-            telegramBotsApi.registerBot(bot);
-            System.out.println("Bot started successfully!");
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-}
+# Start the Telegram bot.
+bot.polling()
+    
