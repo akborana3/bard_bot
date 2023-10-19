@@ -1,4 +1,4 @@
-name: Telegram Bot
+name: Python 3.10 workflow
 
 on:
   push:
@@ -10,18 +10,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Install Python 3.10
-  uses: actions/setup-python@v3
-  with:
-    python-version: 3.10
-    
-      - name: Install Python dependencies
+      - name: Install Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: 3.10
 
-      - name: Install the ChatGPT API client
-        run: pip install chatgpt
-
-      - name: Start the Telegram bot
-        run: python bot.py
+      - name: Run your Python script
+        run: python your_python_script.py
